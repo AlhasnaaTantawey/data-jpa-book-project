@@ -18,21 +18,21 @@ public class PriceSchedule {
    @SchedulerLock(name = "bookComputePrice")
    @Async
    protected  void computePrice() throws InterruptedException {
-		 
+
 	   Thread.sleep(4000);
-		log.info("compute price >> " + LocalDateTime.now());
-		
+	//	log.info("compute price >> " + LocalDateTime.now());
+
 	}
-   
+//
    
    @Scheduled(fixedRateString = "${price.intervial}" )
    @SchedulerLock(name = "bookComputeDiscount")
    @Async
    protected  void computeDiscount() throws InterruptedException {
-		 
+
 	   Thread.sleep(4000);
-		log.info("compute discount >> " + LocalDateTime.now());
-		
+	//	log.info("compute discount >> " + LocalDateTime.now());
+
 	}
 	
 	

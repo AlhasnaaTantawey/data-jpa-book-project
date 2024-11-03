@@ -131,6 +131,12 @@
 			<version>2.1.10</version>
 		</dependency>
 
+<!--		aop aspect object programming-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 	</dependencies>
 <!--	<dependencyManagement>-->
 <!--		<dependencies>-->
