@@ -14,26 +14,26 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 public class PriceSchedule {
    Logger log =LoggerFactory.getLogger(PriceSchedule.class);
 	
-   @Scheduled(fixedRateString = "${price.intervial}" )
-   @SchedulerLock(name = "bookComputePrice")
-   @Async
-   protected  void computePrice() throws InterruptedException {
-
-	   Thread.sleep(4000);
-	//	log.info("compute price >> " + LocalDateTime.now());
-
-	}
+//   @Scheduled(fixedRateString = "${price.intervial}" )
+//   @SchedulerLock(name = "bookComputePrice")
+//   @Async
+//   protected  void computePrice() throws InterruptedException {
+//
+//	   Thread.sleep(4000);
+//	//	log.info("compute price >> " + LocalDateTime.now());
+//
+//	}
 //
    
-   @Scheduled(fixedRateString = "${price.intervial}" )
-   @SchedulerLock(name = "bookComputeDiscount")
-   @Async
-   protected  void computeDiscount() throws InterruptedException {
-
-	   Thread.sleep(4000);
-	//	log.info("compute discount >> " + LocalDateTime.now());
-
-	}
+//   @Scheduled(fixedRateString = "${price.intervial}" )
+//   @SchedulerLock(name = "bookComputeDiscount")
+//   @Async
+//   protected  void computeDiscount() throws InterruptedException {
+//
+//	   Thread.sleep(4000);
+//	//	log.info("compute discount >> " + LocalDateTime.now());
+//
+//	}
 	
 	
 }

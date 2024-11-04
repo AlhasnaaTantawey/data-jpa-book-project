@@ -2,16 +2,16 @@ package com.global.book.dto;
 
 public class PostDto {
 
-    private double id;
-    private double userId;
+    private Long id;
+    private Long userId;
     private String body;
-    private String title;
+   private String title;
 
     public double getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -19,7 +19,7 @@ public class PostDto {
         return userId;
     }
 
-    public void setUserId(double userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -31,11 +31,11 @@ public class PostDto {
         this.body = body;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
 }
