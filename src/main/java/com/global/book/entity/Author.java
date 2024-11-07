@@ -1,5 +1,6 @@
 package com.global.book.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import com.global.book.base.BaseEntity;
 import com.global.book.validator.IPAddress;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.NamedAttributeNode;
-import jakarta.persistence.NamedEntityGraph;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,7 +18,7 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "authors")
 @AttributeOverride(name = "id", column = @Column(name = "author_id"))
-public class Author extends BaseEntity<Long> {
+public class Author extends BaseEntity<Long> implements Serializable {
    
   
 	@NotBlank(message = "{validation-name}")
@@ -50,22 +44,22 @@ public class Author extends BaseEntity<Long> {
      
      
     // @JsonBackReference
-     @OneToMany(mappedBy = "author",fetch = FetchType.LAZY )
+     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
      private List<Book> books =new ArrayList<>();
-     
+
      //helper method 
-     
+
      public void addBook(Book book) {
     	 books.add(book);
      }
-     
-     
-     
+
+
+
      public void removeBook(Book book) {
     	 books.remove(book);
      }
-     
-     
+
+
 	public List<Book> getBooks() {
 		return books;
 	}

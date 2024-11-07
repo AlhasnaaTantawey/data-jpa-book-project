@@ -59,23 +59,15 @@ public class BaseService <T extends BaseEntity<ID>, ID extends Number> {
 
 		return baseRepo.save(entity);
 	}
-	
 	public List<T>  insert(List<T> entities) {
-
-	
 		return baseRepo.saveAll(entities);
 	}
-
 	
 	public T update(T entity) {
-
 		return baseRepo.save(entity);
 	}
 
-	
 	public void deleteById(ID id) {
 		baseRepo.deleteById(id);
-
 	}
-
 }

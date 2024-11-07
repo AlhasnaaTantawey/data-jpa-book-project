@@ -70,13 +70,11 @@ public class AuthorController {
 
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody @Valid Author entity) {
-
 		return ResponseEntity.ok(authorService.update(entity));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-
 		authorService.deleteById(id);
 		return ResponseEntity.ok(null);
 

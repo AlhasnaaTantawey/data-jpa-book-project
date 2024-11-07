@@ -21,12 +21,14 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
+
 
 @NamedEntityGraph(name = "loadBook" ,attributeNodes = @NamedAttributeNode(value = "author"))
 @Entity
 @Table(name="books")
 @AttributeOverride(name = "id", column = @Column(name = "book_id"))
-public class Book extends BaseEntity<Long> {
+public class Book extends BaseEntity<Long> implements Serializable {
 
 
 	@NotNull(message = "Should be enter name book ")

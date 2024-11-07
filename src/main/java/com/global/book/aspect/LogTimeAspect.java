@@ -2,10 +2,7 @@ package com.global.book.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -26,10 +23,10 @@ public class LogTimeAspect {
 
     @Pointcut(value = "execution(* com.global.book.repository..*(..)) ")
     public  void forRepostioryLog(){
-        log.info(" ------> test repo");
+
     }
 
-    @Pointcut(value = "execution(* com.global.book.base..*(..)) ")
+    @Pointcut(value = "execution(* com.global.book.service.*.*(..)) ")
     public  void forServiceLog(){}
 
     @Pointcut(value = "execution(* com.global.book.controller..*(..)) ")
@@ -38,7 +35,9 @@ public class LogTimeAspect {
     @Pointcut(value = "forControllerLog() || forServiceLog() || forRepostioryLog()")
     public  void forAllApp(){}
 
-    @Before(value = "forAllApp()")
+ // @Before(value = "forAllApp()")
+  //@After(value = "forAllApp()")
+  @AfterReturning(value = "forAllApp()")
     public  void beforeMethod(JoinPoint joinPoint){
         String nameMethod=  joinPoint.getSignature().toShortString();
 
