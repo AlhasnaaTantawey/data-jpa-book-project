@@ -7,10 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
+import org.springframework.cache.annotation.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,7 @@ import com.global.book.repository.AuthorSpec;
 
 
 @Service
+@CacheConfig(cacheNames = "autherValueForAllMethods")
 public class AuthorService extends BaseService<Author, Long> {
 	@Autowired
 	private AuthorRepo authorRepo;
@@ -31,13 +29,13 @@ public class AuthorService extends BaseService<Author, Long> {
 
 	//cachable --> to add in cache
 	@Override
-	@Cacheable(value = "findAllAuther", key = "#root.methodName")
+	@Cacheable( key = "#root.methodName")
 	public List<Author> findAll() {
 		return super.findAll();
 	}
 
 	@Override
-	@Cacheable(value = "findByIdAuther" , key = "#id")
+	@Cacheable( key = "#id")
 	public Author findById(Long id) {
 		return super.findById(id);
 	}
@@ -45,7 +43,7 @@ public class AuthorService extends BaseService<Author, Long> {
 	//cacheevict to remove from cache to add changes to there are not gap betw DB and cache
 	@Override
 	//@CachePut(value =  "insertAuthor", key = "#root.methodName" )
-	@CacheEvict(value = "findAllAuther", key = "#root.methodName" ,allEntries = true)
+	@CacheEvict( key = "#root.methodName" ,allEntries = true)
 //	@Caching(evict = {@CacheEvict(value = "insertAuthor") ,
 //			@CacheEvict(value = "anyanothername" ,key = "#Author.id")})
 	public Author insert(Author entity) {
