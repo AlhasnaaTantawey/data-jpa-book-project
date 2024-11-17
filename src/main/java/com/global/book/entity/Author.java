@@ -3,12 +3,9 @@ package com.global.book.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.global.book.base.BaseEntity;
 import com.global.book.validator.IPAddress;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

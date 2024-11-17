@@ -29,7 +29,7 @@ public class AuthorService extends BaseService<Author, Long> {
 
 	//cachable --> to add in cache
 	@Override
-	@Cacheable( key = "#root.methodName")
+	@Cacheable(value = "findAllAuthor", key = "#root.methodName")
 	public List<Author> findAll() {
 		return super.findAll();
 	}
@@ -43,7 +43,7 @@ public class AuthorService extends BaseService<Author, Long> {
 	//cacheevict to remove from cache to add changes to there are not gap betw DB and cache
 	@Override
 	//@CachePut(value =  "insertAuthor", key = "#root.methodName" )
-	@CacheEvict( key = "#root.methodName" ,allEntries = true)
+	@CacheEvict(value = "findAllAuthor", key = "#root.methodName" ,allEntries = true)
 //	@Caching(evict = {@CacheEvict(value = "insertAuthor") ,
 //			@CacheEvict(value = "anyanothername" ,key = "#Author.id")})
 	public Author insert(Author entity) {

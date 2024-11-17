@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-
+//consume REST API by RestTemplate in controller
 @Service
 public class PostService {
 
