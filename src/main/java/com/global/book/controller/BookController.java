@@ -1,5 +1,6 @@
 package com.global.book.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,28 +19,20 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/book")
+@RequiredArgsConstructor
 public class BookController {
+
+	private final BookService bookService;
 
 	@GetMapping("/custom/{id}")
 	 public ResponseEntity<Book>  findByIdWithAuthor(@PathVariable Long id) {
 		 return ResponseEntity.ok(bookService.findByIdWithAuthor(id));
 	 }
-	
-	
-	private BookService bookService;
-
-	public BookController(BookService bookService) {
-		super();
-		this.bookService = bookService;
-	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Long id) {
-
 		Book book = bookService.findById(id);
-
 		BookDto bookDto = new BookDto();
-
 		bookDto.setId(book.getId());
 		bookDto.setName(book.getName());
 		bookDto.setPrice(book.getPrice());
@@ -49,25 +42,20 @@ public class BookController {
 
 	@GetMapping
 	public ResponseEntity<?> findAll() {
-
 		return ResponseEntity.ok(bookService.findAll());
 	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody @Valid  BookDto dto) {
-
 		Book book =new Book();
 		book.setPrice(dto.getPrice());
 		book.setName(dto.getName());
 		book.setAuthor(dto.getAuthor());
-		
-		
 		return ResponseEntity.ok(bookService.insert(book));
 	}
 
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody @Valid  Book book) {
-
 		return ResponseEntity.ok(bookService.update(book));
 	}
 

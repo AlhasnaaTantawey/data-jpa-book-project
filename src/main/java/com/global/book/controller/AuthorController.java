@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -32,14 +33,10 @@ import jakarta.validation.constraints.Min;
 @Validated
 @RestController
 @RequestMapping("/author")
+@RequiredArgsConstructor
 public class AuthorController {
 
-	private AuthorService authorService;
-
-	public AuthorController(AuthorService authorService) {
-		super();
-		this.authorService = authorService;
-	}
+	private final AuthorService authorService;
 
     @Operation(summary = "get an auther by its id")
 	@ApiResponses(value = {
@@ -77,7 +74,6 @@ public class AuthorController {
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		authorService.deleteById(id);
 		return ResponseEntity.ok(null);
-
 	}
 
 	@PostMapping("/spec")
@@ -87,7 +83,4 @@ public class AuthorController {
 
 	}
 
-
-	
-	
 }

@@ -2,6 +2,7 @@ package com.global.book.controller;
 
 import com.global.book.dto.ProductDto;
 import com.global.book.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,10 @@ import reactor.core.publisher.Flux;
 
 @RequestMapping("/api/v1/product")
 @RestController
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+
+    private final ProductService productService;
 
     @GetMapping
     public ResponseEntity<Flux<ProductDto>> getAllProducts(){

@@ -2,6 +2,7 @@ package com.global.book.service;
 
 import java.time.LocalDateTime;
 
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -11,8 +12,9 @@ import org.springframework.stereotype.Component;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 
 @Component
+@Log4j2
 public class PriceSchedule {
-   Logger log =LoggerFactory.getLogger(PriceSchedule.class);
+
 	
 //   @Scheduled(fixedRateString = "${price.intervial}" )
 //   @SchedulerLock(name = "bookComputePrice")

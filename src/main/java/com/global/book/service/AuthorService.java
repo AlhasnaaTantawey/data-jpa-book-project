@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,11 @@ import com.global.book.repository.AuthorSpec;
 
 @Service
 @CacheConfig(cacheNames = "autherValueForAllMethods")
+@RequiredArgsConstructor
+@Log4j2
 public class AuthorService extends BaseService<Author, Long> {
-	@Autowired
-	private AuthorRepo authorRepo;
 
-	Logger logger =LoggerFactory.getLogger(AuthorService.class);
+	private final AuthorRepo authorRepo;
 
 	//cachable --> to add in cache
 	@Override
@@ -49,9 +51,9 @@ public class AuthorService extends BaseService<Author, Long> {
 	public Author insert(Author entity) {
 		if(entity.getEmail() !=null && !entity.getEmail().isEmpty()) {
 			Optional<Author> author= findByEmail(entity.getEmail());
-			logger.info("author name is {} and email is {}", entity.getName(), entity.getEmail());
+			log.info("author name is {} and email is {}", entity.getName(), entity.getEmail());
 			if(author.isPresent()) {
-				logger.error("email.message");
+				log.error("email.message");
 				throw new DuplicateRecordException("email.message");
 			}
 		}

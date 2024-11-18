@@ -1,5 +1,7 @@
 package com.global.book.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,8 +30,9 @@ import java.io.Serializable;
 @Entity
 @Table(name="books")
 @AttributeOverride(name = "id", column = @Column(name = "book_id"))
+@Setter
+@Getter
 public class Book extends BaseEntity<Long> implements Serializable {
-
 
 	@NotNull(message = "Should be enter name book ")
 	@Column(name = "book_name")
@@ -53,62 +56,10 @@ public class Book extends BaseEntity<Long> implements Serializable {
 	@JoinColumn(name = "author_id")
 	private Author author;
 
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public double getPrice() {
-		return price;
-	}
-
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-
-	public Author getAuthor() {
-		return author;
-	}
-
-
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
-
-
-	public double getDiscounted() {
-		return discounted;
-	}
-
-
-	public void setDiscounted(double discounted) {
-		this.discounted = discounted;
-	}
-	
 	//execute before load entity and execute only one
 	@PostLoad
 	public void calcDiscount() {
 		this.setDiscounted(price * .25);
 	}
 
-
-//	public double getBookCount() {
-//		return bookCount;
-//	}
-//
-//
-//	public void setBookCount(double bookCount) {
-//		this.bookCount = bookCount;
-//	}
-	
-	
 }
