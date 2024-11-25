@@ -3,11 +3,14 @@ package com.global.book.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.global.book.dto.AuthorDto;
+import com.global.book.mapper.BookMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +40,7 @@ import jakarta.validation.constraints.Min;
 public class AuthorController {
 
 	private final AuthorService authorService;
+	private  final BookMapper bookMapper;
 
     @Operation(summary = "get an auther by its id")
 	@ApiResponses(value = {
@@ -49,25 +53,30 @@ public class AuthorController {
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById( @Parameter(description = "auther id" , example = "id from 1 : 12") @PathVariable @Min(value = 1) @Max(value = 50) Long id) {
-
-		return ResponseEntity.ok(authorService.findById(id));
+		Author entity=authorService.findById(id);
+		AuthorDto dto=bookMapper.authorEntityToDto(entity);
+		return ResponseEntity.ok(dto);
 	}
      @Operation(summary = "get all authers")
 	@GetMapping
 	public ResponseEntity<?> findAll() {
-
-		return ResponseEntity.ok(authorService.findAll());
+	List<Author> entityList	= authorService.findAll();
+	      List<AuthorDto> dtoList= bookMapper.convertAuthorEntityListToDtoList(entityList);
+		return ResponseEntity.ok(dtoList);
 	}
 
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody @Valid Author entity) {
-
-		return ResponseEntity.ok(authorService.insert(entity));
+	Author entityauthor = authorService.insert(entity);
+	     AuthorDto dto= bookMapper.authorEntityToDto(entityauthor);
+		return ResponseEntity.ok(dto);
 	}
 
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody @Valid Author entity) {
-		return ResponseEntity.ok(authorService.update(entity));
+		Author entityauthor =authorService.update(entity);
+		AuthorDto dto= bookMapper.authorEntityToDto(entityauthor);
+		return ResponseEntity.ok(dto);
 	}
 
 	@DeleteMapping("/{id}")
@@ -78,7 +87,6 @@ public class AuthorController {
 
 	@PostMapping("/spec")
 	public ResponseEntity<?> findByAuthorSpec(  @RequestBody AuthorSearch search) {
-
 		return ResponseEntity.ok(authorService.findByAuthorSpec(search));
 
 	}

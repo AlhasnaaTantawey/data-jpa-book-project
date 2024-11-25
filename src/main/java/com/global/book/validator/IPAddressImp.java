@@ -13,7 +13,6 @@ public class IPAddressImp implements ConstraintValidator<IPAddress, String> {
 		 if (value == null || value.isEmpty()) {
 	            return false;
 	        }
-
 	        // Updated regex to capture each octet in separate groups
 	        Pattern pattern = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
 	        Matcher matcher = pattern.matcher(value);

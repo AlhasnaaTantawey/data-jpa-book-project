@@ -9,6 +9,7 @@ import com.global.book.validator.IPAddress;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 

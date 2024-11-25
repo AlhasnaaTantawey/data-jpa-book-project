@@ -2,7 +2,9 @@ package com.global.book.service;
 
 import java.util.List;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.global.book.base.BaseService;

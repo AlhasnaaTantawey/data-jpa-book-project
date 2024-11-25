@@ -28,8 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
 		  return new AuditorAwareImpl();
 	  }
 
-	
-	
 	@Bean
 	public MessageSource messageSource() {
 	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

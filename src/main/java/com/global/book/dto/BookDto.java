@@ -13,15 +13,8 @@ import lombok.Setter;
 public class BookDto {
 
 	private Long id ;
-	
-     @NotBlank
 	private String name ;
-	
-     @Min(value = 5)
- 	@Max(value = 1000)
 	private double price;
-	
-	@NotNull
-	private Author author;
+//	private Author author;
 
 }
