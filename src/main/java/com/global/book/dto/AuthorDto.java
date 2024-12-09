@@ -12,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthorDto extends BaseDto<Long> {
 
-    private String name;
+    private String fullName;
     private String email;
-//    private String ipAdress;
+   private String ipAdress;
    // private String imagePath;
    // private List<Book> books =new ArrayList<>();
 

@@ -29,6 +29,6 @@ public interface BaseRepository <T extends BaseEntity<ID>, ID extends Number> ex
 	                .executeUpdate();
 	    }
 
-	    public static final EntityManager entityManager = null;
+	    EntityManager entityManager = null;
 
 }

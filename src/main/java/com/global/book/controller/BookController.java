@@ -1,5 +1,8 @@
 package com.global.book.controller;
 
+import com.global.book.dto.AuthorDto;
+import com.global.book.entity.Author;
+import com.global.book.mapper.BookAuthorMapper;
 import com.global.book.mapper.BookMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,35 +29,47 @@ import java.util.List;
 public class BookController {
 
 	private final BookService bookService;
+	private  final BookAuthorMapper bookAuthorMapper;
 	private  final BookMapper bookMapper;
 
 	@GetMapping("/custom/{id}")
 	 public ResponseEntity<?>  findByIdWithAuthor(@PathVariable Long id) {
 		Book entity=bookService.findByIdWithAuthor(id);
-		 return ResponseEntity.ok(bookMapper.bookEntityToDto(entity));
+		//BookDto dto=  bookAuthorMapper.bookEntityToDto(entity);
+		BookDto dto=  bookMapper.map(entity);
+		 return ResponseEntity.ok(dto);
 	 }
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		Book book = bookService.findById(id);
-		 BookDto dto=bookMapper.bookEntityToDto(book);
+		BookDto dto=  bookMapper.map(book);
+		// BookDto dto= bookAuthorMapper.bookEntityToDto(book);
 		return ResponseEntity.ok(dto);
 	}
 
 	@GetMapping("/findall")
 	public ResponseEntity<?> findAll() {
 	List<Book> entityList=bookService.findAll();
-		return ResponseEntity.ok(bookMapper.convertBookEntityListToDtoList(entityList));
+	List<BookDto> dtoList=	bookMapper.maptoList(entityList);
+	//List<BookDto> dtoList=	bookAuthorMapper.convertBookEntityListToDtoList(entityList);
+		return ResponseEntity.ok(dtoList);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody @Valid  BookDto dto) {
-		return ResponseEntity.ok(bookMapper.bookEntityToDto(bookService.insert(bookMapper.bookDtoToEntity(dto))));
+	public ResponseEntity<?> insert(@RequestBody @Valid BookDto bookDto) {
+		Book book = bookMapper.unmap(bookDto);
+		Book bookentity = bookService.insert(book);
+		BookDto dto = bookMapper.map(bookentity);
+		return ResponseEntity.ok(dto);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody @Valid  BookDto dto) {
-		return ResponseEntity.ok(bookMapper.bookEntityToDto(bookService.update(bookMapper.bookDtoToEntity(dto))));
+	public ResponseEntity<?> update(@RequestBody @Valid  BookDto bookDto) {
+		Book entity = bookMapper.unmap(bookDto);
+		Book bookentity=	bookService.update(entity);
+		BookDto dto=  bookMapper.map(bookentity);
+		return ResponseEntity.ok(dto);
 	}
 
 	@DeleteMapping("/{id}")

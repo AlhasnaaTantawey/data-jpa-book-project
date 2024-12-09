@@ -4,95 +4,55 @@ import com.global.book.dto.AuthorDto;
 import com.global.book.dto.BookDto;
 import com.global.book.entity.Author;
 import com.global.book.entity.Book;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.*;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
-public class BookMapper {
+@Mapper(componentModel = "spring", uses = {AuthorMapper.class}, imports = {LocaleContextHolder.class})
+public interface BookMapper {
+    //map from book entity to dto
+    @Mapping(source = "name", target = "fullName")
+//    @Mapping(source = "author.name",target = "authorName")
+//    @Mapping(source = "author.ipAdress", target = "authorIpAdress")
+//    @Mapping(source = "author.email", target = "authorEmail")
+    BookDto map(Book entity);
 
-   private final   ModelMapper modelMapper ;
 
-    public Author authorDtoToEntity(AuthorDto dto){
-        Author entity=new Author();
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setEmail(dto.getEmail());
-      //  entity.setIpAdress(dto.getIpAdress());
-       // entity.setImagePath(dto.getImagePath());
-       // entity.setBooks(dto.getBooks());
-        return entity;
+    @BeforeMapping
+    default void mapName(Author entity, @MappingTarget AuthorDto dto) {
     }
 
-//    public Author AuthorDtoToEntity(AuthorDto dto){
-//        return  modelMapper.map(dto ,Author.class);
-//    }
 
-    public AuthorDto authorEntityToDto(Author entity){
-        AuthorDto dto=new AuthorDto();
-        dto.setId(entity.getId());
-        dto.setName(entity.getName());
-        dto.setEmail(entity.getEmail());
-       // dto.setIpAdress(entity.getIpAdress());
-        //dto.setImagePath(entity.getImagePath());
-       // dto.setBooks(entity.getBooks());
-        return dto;
-    }
+    //map from  dto to book entity
+    @Mapping(source = "fullName", target = "name")
+    Book unmap(BookDto dto);
 
-    public Book bookDtoToEntity(BookDto dto){
-        Book entity=new Book();
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setPrice(dto.getPrice());
-       // entity.setAuthor(dto.getAuthor());
-        return entity;
-    }
+    //map from list<entity> to list<dto>
+    @Mapping(source = "name", target = "fullName")
+    List<BookDto> maptoList(List<Book> entityList);
 
-//    public Book BookDtoToEntity(BookDto dto){
-//        return modelMapper.map(dto ,Book.class);
-//    }
-
-    public BookDto bookEntityToDto(Book entity){
-        BookDto dto=new BookDto();
-        dto.setId(entity.getId());
-        dto.setName(entity.getName());
-        dto.setPrice(entity.getPrice());
-       // dto.setAuthor(entity.getAuthor());
-        return dto;
-    }
-
-    public List<Book>convertBookDtoListToEntityList(List<BookDto> dtoList){
-        ModelMapper modelMapper=new ModelMapper();
-       return dtoList.stream()
-               .map( bookDto -> modelMapper.map(bookDto , Book.class))
-               .collect(Collectors.toList());
-    }
-
-    public List<BookDto>convertBookEntityListToDtoList(List<Book> entityList){
-        ModelMapper modelMapper=new ModelMapper();
-        return entityList.stream()
-                .map( entityBook -> modelMapper.map(entityBook , BookDto.class))
-                .toList();
-    }
-
-    public List<AuthorDto>convertAuthorEntityListToDtoList(List<Author> entityList){
-        ModelMapper modelMapper=new ModelMapper();
-        return entityList.stream()
-                .map( entityAuthor ->
-                        modelMapper.map(entityAuthor , AuthorDto.class)
-                )
-                .toList();
-    }
-
-    public List<Author>convertAuthorDtoListToEntityList(List<AuthorDto> dtoList){
-        ModelMapper modelMapper=new ModelMapper();
-        return dtoList.stream()
-                .map( dtoAuthor -> modelMapper.map(dtoAuthor , Author.class))
-                .collect(Collectors.toList());
-    }
-
+    //map from list<dto> to list<entity>
+    @Mapping(source = "fullName", target = "name")
+    List<Book> unmaptoList(List<BookDto> dtoList);
 }
+
+//    @BeforeMapping
+//    default void mapName(Author entity ,@MappingTarget AuthorDto dto){}
+
+
+//    @Mapping(target = "author.ipAdress", defaultValue = "192.168.1.1")
+//    @Mapping(target = "fullName", expression = "java(mapFullName(entity))")
+//    BookDto map(Book entity);
+//
+//    default String mapFullName(Book entity) {
+//        return getFullNameFromLocaleContext().getLanguage().equals("ar")
+//                ? entity.getName()  // Use entity.getName() since fullName doesn't exist
+//                : entity.getName(); // Same logic for now; adjust as needed
+//    }
+//
+//    default Locale getFullNameFromLocaleContext() {
+//        return LocaleContextHolder.getLocale();
+//    }
+
+// @Mapping(target = "fullName", expression = "java(LocaleContextHolder.getLocale().getLanguage().equals(\"ar\") ? entity.getName() : entity.getName())")

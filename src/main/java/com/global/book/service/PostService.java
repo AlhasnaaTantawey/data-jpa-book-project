@@ -14,7 +14,7 @@ import java.util.List;
 public class PostService {
 
 
-private static  String BASE_POST_URL="https://jsonplaceholder.typicode.com/posts";
+private static final String BASE_POST_URL="https://jsonplaceholder.typicode.com/posts";
 
     RestTemplate restTemplate= new RestTemplate();
 

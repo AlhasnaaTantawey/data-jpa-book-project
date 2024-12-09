@@ -1,18 +1,16 @@
 package com.global.book.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.global.book.dto.AuthorDto;
-import com.global.book.mapper.BookMapper;
+import com.global.book.mapper.AuthorMapper;
+import com.global.book.mapper.BookAuthorMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.global.book.entity.Author;
@@ -40,7 +37,8 @@ import jakarta.validation.constraints.Min;
 public class AuthorController {
 
 	private final AuthorService authorService;
-	private  final BookMapper bookMapper;
+	private  final BookAuthorMapper bookAuthorMapper;
+	private final AuthorMapper authorMapper;
 
     @Operation(summary = "get an auther by its id")
 	@ApiResponses(value = {
@@ -54,28 +52,34 @@ public class AuthorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById( @Parameter(description = "auther id" , example = "id from 1 : 12") @PathVariable @Min(value = 1) @Max(value = 50) Long id) {
 		Author entity=authorService.findById(id);
-		AuthorDto dto=bookMapper.authorEntityToDto(entity);
+		AuthorDto dto= authorMapper.map(entity);
+//		AuthorDto dto=bookAuthorMapper.authorEntityToDto(entity);
 		return ResponseEntity.ok(dto);
 	}
      @Operation(summary = "get all authers")
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 	List<Author> entityList	= authorService.findAll();
-	      List<AuthorDto> dtoList= bookMapper.convertAuthorEntityListToDtoList(entityList);
+	List<AuthorDto> dtoList    = authorMapper.maptoList(entityList);
+	//List<AuthorDto> dtoList= bookAuthorMapper.convertAuthorEntityListToDtoList(entityList);
 		return ResponseEntity.ok(dtoList);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody @Valid Author entity) {
-	Author entityauthor = authorService.insert(entity);
-	     AuthorDto dto= bookMapper.authorEntityToDto(entityauthor);
+	public ResponseEntity<?> insert(@RequestBody @Valid AuthorDto authorDto) {
+		Author entity = authorMapper.unmap(authorDto);
+		Author entityauthor = authorService.insert(entity);
+		AuthorDto dto = authorMapper.map(entityauthor);
+		//AuthorDto dto= bookAuthorMapper.authorEntityToDto(entityauthor);
 		return ResponseEntity.ok(dto);
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody @Valid Author entity) {
+	public ResponseEntity<?> update(@RequestBody @Valid AuthorDto authorDto) {
+		Author entity = authorMapper.unmap(authorDto);
 		Author entityauthor =authorService.update(entity);
-		AuthorDto dto= bookMapper.authorEntityToDto(entityauthor);
+		AuthorDto dto= authorMapper.map(entityauthor);
+//		AuthorDto dto= bookAuthorMapper.authorEntityToDto(entityauthor);
 		return ResponseEntity.ok(dto);
 	}
 

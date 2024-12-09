@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 @Order(0)
 @Aspect
 public class MeasurementAspect {
-    private Logger log = LoggerFactory.getLogger(MeasurementAspect.class);
+    private final Logger log = LoggerFactory.getLogger(MeasurementAspect.class);
 
     @Around(value = "execution(* com.global.book.service.*.*(..)) ")
     public  Object logTime(ProceedingJoinPoint joinPoint) throws Throwable {

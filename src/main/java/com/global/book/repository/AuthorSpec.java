@@ -19,7 +19,7 @@ import jakarta.persistence.criteria.Root;
 
 public class AuthorSpec implements Specification<Author> {
 
-	private AuthorSearch search;
+	private final AuthorSearch search;
 
 	public AuthorSpec(AuthorSearch search) {
 		super();

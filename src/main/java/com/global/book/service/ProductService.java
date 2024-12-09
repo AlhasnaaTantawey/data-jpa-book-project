@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 
 @Service
 public class ProductService {
-    private static String BASE_PRODUCT_URL="http://localhost:8081/api/v1/product";
+    private static final String BASE_PRODUCT_URL="http://localhost:8081/api/v1/product";
 
     WebClient client=WebClient.create(BASE_PRODUCT_URL);
 

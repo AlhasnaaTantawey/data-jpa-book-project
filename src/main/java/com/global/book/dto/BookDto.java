@@ -13,8 +13,11 @@ import lombok.Setter;
 public class BookDto {
 
 	private Long id ;
-	private String name ;
+	private String fullName ;
 	private double price;
-//	private Author author;
+//	private String authorEmail;
+//	private String authorIpAdress;
+	private AuthorDto author;
+//	private String authorName;
 
 }

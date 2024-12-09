@@ -2,6 +2,7 @@ package com.global.book.errors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(RecordNotFoundException.class)
 	  public ResponseEntity<?>    handleRecordNotFound(RecordNotFoundException ex){
 		  
-		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Arrays.asList(ex.getMessage()));
+		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Collections.singletonList(ex.getMessage()));
 		  return ResponseEntity.
 				  status(HttpStatus.NOT_FOUND).
 				  body(error);
@@ -64,7 +65,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(DuplicateRecordException.class)
 	  public ResponseEntity<?> handleDuplicateRecord(DuplicateRecordException ex){
 		  
-		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Arrays.asList(ex.getMessage()));
+		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Collections.singletonList(ex.getMessage()));
 		  return ResponseEntity.
 				  status(HttpStatus.BAD_REQUEST).
 				  body(error);
@@ -76,7 +77,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		  
 		ex.printStackTrace();
 		log.error(ex.getMessage());
-		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Arrays.asList(ex.getMessage()));
+		ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Collections.singletonList(ex.getMessage()));
 		  return ResponseEntity.
 				  status(HttpStatus.EXPECTATION_FAILED).
 				  body(error);

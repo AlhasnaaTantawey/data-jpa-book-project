@@ -1,6 +1,7 @@
 package com.global.book.errors;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -21,7 +22,7 @@ public class CustomErrorAttribute extends DefaultErrorAttributes {
 		errorAttributes.put("sucess", Boolean.FALSE);
 		errorAttributes.put("status",errorAttributes.get("error"));
 		errorAttributes.put("exception", errorAttributes.get("message"));
-		errorAttributes.put("details", Arrays.asList(errorAttributes.get("message")));
+		errorAttributes.put("details", Collections.singletonList(errorAttributes.get("message")));
 		
 		errorAttributes.remove("error");
 		errorAttributes.remove("path");

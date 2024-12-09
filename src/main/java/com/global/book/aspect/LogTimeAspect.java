@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Order(1)
 public class LogTimeAspect {
 
-    private  Logger log = LoggerFactory.getLogger(LogTimeAspect.class);
+    private final Logger log = LoggerFactory.getLogger(LogTimeAspect.class);
 
 
     @Pointcut(value = "execution(* com.global.book.repository..*(..)) ")
