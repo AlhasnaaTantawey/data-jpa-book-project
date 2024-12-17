@@ -9,9 +9,7 @@ import com.global.book.validator.IPAddress;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Cleanup;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Schema(name = "auther entity")
 @NamedEntityGraph(name = "loadAuthor" ,attributeNodes = @NamedAttributeNode(value = "books"))
@@ -20,6 +18,8 @@ import lombok.Setter;
 @AttributeOverride(name = "id", column = @Column(name = "author_id"))
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Author extends BaseEntity<Long> implements Serializable {
 
 	@NotBlank(message = "{validation-name}")
